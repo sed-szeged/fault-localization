@@ -5,9 +5,7 @@ import hu.szte.inf.sed.fl.coverage.data.io.writer.NumericMethodCoverageDataWrite
 import org.javatuples.Pair;
 
 import java.io.DataOutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class NumericMethodCoverageData implements MethodCoverageData<Short, Long> {
 
@@ -67,7 +65,13 @@ public class NumericMethodCoverageData implements MethodCoverageData<Short, Long
 
     @Override
     public Iterator<Pair<Short, Long>> iterator() {
-        return data.entrySet().stream().map(entry -> new Pair<>(entry.getKey(), entry.getValue())).iterator();
+        final List<Pair<Short, Long>> result = new ArrayList<>();
+
+        for (final Map.Entry<Short, Long> entry : data.entrySet()) {
+            result.add(new Pair<>(entry.getKey(), entry.getValue()));
+        }
+
+        return result.iterator();
     }
 
 }

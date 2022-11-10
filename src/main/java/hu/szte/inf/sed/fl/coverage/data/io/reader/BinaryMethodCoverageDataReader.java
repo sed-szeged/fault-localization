@@ -17,7 +17,7 @@ public class BinaryMethodCoverageDataReader extends CoverageDataReader<Short, Lo
 
     @Override
     public CoverageData<Short, Long> read() throws IOException {
-        checkTypeSizes(Short.BYTES, Long.BYTES);
+        checkTypeSizes(Short.SIZE / 8, Long.SIZE / 8);
 
         final int numOfElements = inputStream.readInt();
 

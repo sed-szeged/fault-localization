@@ -6,9 +6,7 @@ import lombok.ToString;
 import org.javatuples.Pair;
 
 import java.io.DataOutputStream;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 @ToString
 public class BinaryMethodCoverageData implements MethodCoverageData<Short, Long> {
@@ -61,7 +59,13 @@ public class BinaryMethodCoverageData implements MethodCoverageData<Short, Long>
 
     @Override
     public Iterator<Pair<Short, Long>> iterator() {
-        return data.stream().map(id -> new Pair<>(id, 1L)).iterator();
+        final List<Pair<Short, Long>> result = new ArrayList<>();
+
+        for (final Short entry : data) {
+            result.add(new Pair<>(entry, 1L));
+        }
+
+        return result.iterator();
     }
 
 }

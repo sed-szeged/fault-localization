@@ -25,7 +25,12 @@ public class FaultLocalization {
         Map<String, Double> scores = new HashMap<>();
 
         for (final Map.Entry<Short, Double> entry : formula.analyse(spectrum).entrySet()) {
-            final String name = spectrum.getCodeElementNameMapping().getOrDefault(entry.getKey(), entry.getKey().toString());
+            String name;
+            if (spectrum.getCodeElementNameMapping().containsKey(entry.getKey())) {
+                name = spectrum.getCodeElementNameMapping().get(entry.getKey());
+            } else {
+                name = entry.getKey().toString();
+            }
             scores.put(name, entry.getValue());
         }
 

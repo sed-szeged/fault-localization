@@ -16,7 +16,7 @@ public class NumericMethodCoverageDataWriter extends CoverageDataWriter<Short, L
 
     @Override
     public void write() throws IOException {
-        writeHeader(Granularity.COUNT, Short.BYTES, Long.BYTES);
+        writeHeader(Granularity.COUNT, Short.SIZE / 8, Long.SIZE / 8);
 
         for (final Pair<Short, Long> item : coverage) {
             outputStream.writeShort(item.getValue0());

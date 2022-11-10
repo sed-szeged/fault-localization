@@ -16,7 +16,7 @@ public class BinaryMethodCoverageDataWriter extends CoverageDataWriter<Short, Lo
 
     @Override
     public void write() throws IOException {
-        writeHeader(Granularity.BINARY, Short.BYTES, Long.BYTES);
+        writeHeader(Granularity.BINARY, Short.SIZE / 8, Long.SIZE / 8);
 
         for (final Pair<Short, Long> item : coverage) {
             outputStream.writeShort(item.getValue0());

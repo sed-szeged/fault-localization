@@ -2,9 +2,7 @@ package hu.szte.inf.sed.fl.coverage.data.spectrum;
 
 import hu.szte.inf.sed.fl.coverage.data.io.reader.TestExecutionDataReader;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,7 +10,7 @@ import java.nio.file.Paths;
 
 public class SpectrumReader {
 
-    private Spectrum spectrum = new Spectrum();
+    private final Spectrum spectrum = new Spectrum();
 
     public Spectrum readFrom(final String dir) {
         readTestExecutions(dir);
@@ -23,7 +21,7 @@ public class SpectrumReader {
 
     private void readTestExecutions(final String dir) {
         try (final DirectoryStream<Path> dirStream = Files.newDirectoryStream(Paths.get(dir), "*.trc")) {
-            dirStream.forEach(path -> {
+            for (final Path path : dirStream) {
                 TestExecutionDataReader reader = new TestExecutionDataReader();
                 try {
                     reader.readFrom(new DataInputStream(Files.newInputStream(path)));
@@ -32,7 +30,7 @@ public class SpectrumReader {
                 }
 
                 spectrum.addTestExecution(reader.getTestExecution());
-            });
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +42,7 @@ public class SpectrumReader {
         if (!Files.exists(file))
             return;
 
-        try (BufferedReader reader = Files.newBufferedReader(file)) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file.toFile()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 final String[] splitted = line.trim().split(":");
